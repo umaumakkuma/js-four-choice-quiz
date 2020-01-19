@@ -1,5 +1,6 @@
 (function () {
   'use strict';
+  // 問題定義
   const questionsData = [
     {
       'id': 1,
@@ -9,48 +10,84 @@
     },
     {
       'id': 2,
-      'text': '日本のほげほげは？',
-      'choice': ['あいう', 'かきく', 'さしす', 'たちつ'],
+      'text': 'iPhoneの最新モデルは？',
+      'choice': ['9', '10', '11', '12'],
       'answer': 2
+    },
+    {
+      'id': 3,
+      'text': '鰯の読み方は？',
+      'choice': ['くじら', 'いわし', 'まぐろ', 'ひらめ'],
+      'answer': 0
     }
   ];
+
+  const $openingWrap = $('#js-opening-wrap');
+  const $questionWrap = $('#js-question-wrap');
+  const $resultWrap = $('#js-result-wrap');
   let questionCount = 0;
-  let questionNum = document.getElementById('question-num');
-  let questionText = document.getElementById('question-text');
-  let nextQuestion = document.getElementById('next-question');
-  nextQuestion.style.display = 'none';
-  const questionArea = document.getElementById('question-area');
-  let question = []
-  let answer = 0;
+  let $questionNum = $('#js-question-num');
+  let $questionText = $('#js-question-text');
+  const $answerArea = $('#js-answer-area');
+  let answerList = [];
+  let correctAnswerList = [];
+  let selectAnswerList = [];
 
-  for (let i = 0; i < questionsData[questionCount]['choice'].length; i++) {
-    question.push(`<li class="choice" data-id=${i}>${questionsData[questionCount]['choice'][i]}</li>`);
-  }
-  questionNum.innerHTML = questionsData[questionCount]['id'];;
-  questionText.innerHTML = questionsData[questionCount]['text'];;
-  questionArea.innerHTML = question.join('');
-  answer = questionsData[questionCount]['answer'];
-  questionCount++;
+  // 画面初期化
+  function init() {
+    $openingWrap.show();
+    $questionWrap.hide();
+    $resultWrap.hide();
 
-  let choices = document.getElementsByClassName('choice')
-  for (let i = 0; i < choices.length; i++) {
-    choices[i].addEventListener('click', function () {
-      if (this.dataset.id == answer) {
-        judge.innerHTML = '正解'
-        console.log(nextQuestion);
-        nextQuestion.style.display = 'block';
-      } else {
-        judge.innerHTML = '不正解'
-        nextQuestion.style.display = 'none';
-      }
-      console.log(this.dataset.id);
+    $('#js-btn-start').on('click', function() {
+      $openingWrap.fadeOut(500, function() {
+        $questionWrap.fadeIn(500);
+        showQuestion();
+      });
     });
   }
 
-  nextQuestion.addEventListener('click', function () {
+  // 問題表示
+  function showQuestion() {
+    // 問題番号表示(第x問)
+    $questionNum.html(questionsData[questionCount]['id']);
 
-  });
+    // 問題文表示
+    $questionText.html(questionsData[questionCount]['text']);
 
-console.log(document.getElementsByClassName('choice'));
+    // 四択回答初期化&生成表示
+    answerList = [];
+    for (let i = 0; i < questionsData[questionCount]['choice'].length; i++) {
+      answerList.push(`<li class="choice" data-id=${i}>${questionsData[questionCount]['choice'][i]}</li>`);
+    }
+    $answerArea.html(answerList.join(''));
 
+    // 正解番号
+    correctAnswerList.push(questionsData[questionCount]['answer']);
+console.log(correctAnswerList, 'コレクトアンサー');
+    // 問題番号インクリメント
+    questionCount++;
+
+    choiseAnswer();
+  }
+
+  // 回答選択
+  function choiseAnswer() {
+    let choices = $('.choice');
+    choices.on('click', function () {
+    selectAnswerList.push(this.dataset.id);
+    console.log(selectAnswerList, 'チェックアンサー');
+      if (questionsData[questionCount] === undefined) {
+        $('#js-result-total-question').html(questionCount)
+        // コレクトアンサーとセレクトアンサーリストで合っている数を数える
+        // $('#js-result-total-answer').html()
+        $questionWrap.fadeOut(500, function() {
+          $resultWrap.fadeIn(500);
+        });
+      } else {
+        showQuestion();
+      }
+    });
+  }
+  init();
 })();
