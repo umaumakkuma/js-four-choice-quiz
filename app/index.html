@@ -6,25 +6,31 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>四択クイズ</title>
     <link rel="stylesheet" href="ress.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=M+PLUS+1p">
     <link rel="stylesheet" href="main.css">
 </head>
 <body>
   <div class="contents-wrap">
-    <div id="js-opening-wrap" class="opning-wrap">
-      <p>四択クイズ</p>
-      <p>何問解けるかな？</p>
-      <button id="js-btn-start" class="btn-start">開始する</button>
+    <div id="js-opening-wrap" class="contents-inner">
+      <h1>四択クイズ</h1>
+      <p class="sub-text">何問解けるかな？</p>
+      <div class="contents-main">
+        <button id="js-btn-start" class="btn-start">開始する</button>
+      </div>
     </div>
-    <div id="js-question-wrap" class="question-wrap">
+    <div id="js-question-wrap" class="contents-inner">
       <h1>第<span id="js-question-num"></span>問</h1>
-      <p id="js-question-text" class="question-text"></p>
-      <ul id="js-answer-area" class="answer-area">
-      </ul>
+      <p id="js-question-text" class="sub-text"></p>
+      <div class="contents-main">
+        <ul id="js-answer-area" class="answer-area"></ul>
+      </div>
     </div>
-    <div id="js-result-wrap" class="result-wrap">
-      <p>あなたの正解率は<br>
-      <span id="js-result-total-question"></span>問中、<span id="js-result-total-answer"></span>問正解でした。</p>
-      <p id="js-result-comment"></p>
+    <div id="js-result-wrap" class="contents-inner">
+      <p class="sub-text">あなたの選んだ選択肢は<br>
+      <span id="js-result-total-question"></span>問中、<span id="js-result-total-score"></span>問正解でした。</p>
+      <div class="contents-main">
+        <p id="js-result-comment" class="result-comment"></p>
+      </div>
     </div>
   </div>
   <script src="https://code.jquery.com/jquery-3.4.1.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
