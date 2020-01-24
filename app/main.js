@@ -40,13 +40,26 @@
 
     // 開始するボタン押下で問題画面に切り替え、問題を表示させる
     $('#js-btn-start').on('click', function () {
-      $openingWrap.fadeOut(500, function () {
-        $questionWrap.fadeIn(500);
-        showQuestion();
-      });
+      switchScene('question');
+      showQuestion();
     });
   }
 
+  // 画面切り替え
+  function switchScene(scene) {
+    switch (scene) {
+      case 'question':
+        $openingWrap.fadeOut(500, function () {
+          $questionWrap.fadeIn(500);
+        });
+        break;
+      case 'result':
+        $questionWrap.fadeOut(500, function () {
+          $resultWrap.fadeIn(500);
+        });
+        break;
+    }
+  }
   // 問題表示
   function showQuestion() {
     const $questionNum  = $('#js-question-num');  // 問題番号の画面表示
@@ -127,9 +140,7 @@
     $('#js-result-comment').text(resultComment);
 
     // リザルト画面表示
-    $questionWrap.fadeOut(500, function () {
-      $resultWrap.fadeIn(500);
-    });
+    switchScene('result');
   }
 
   init();
