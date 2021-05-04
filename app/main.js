@@ -8,21 +8,24 @@
       'text': '問題1',
       'choices': ['選択肢1(正解)', '選択肢2', '選択肢3', '選択肢4'],
       'answer': 0,
-      'prizeMoney': 100
+      'prizeMoney': 100,
+      'fiftyFifty': [0, 1]
     },
     {
       'id': 2,
       'text': '問題2',
       'choices': ['選択肢1', '選択肢2(正解)', '選択肢3', '選択肢4'],
       'answer': 1,
-      'prizeMoney': 1000
+      'prizeMoney': 1000,
+      'fiftyFifty': [1, 3]
     },
     {
       'id': 3,
       'text': '問題3',
       'choices': ['選択肢1', '選択肢2', '選択肢3(正解)', '選択肢4'],
       'answer': 2,
-      'prizeMoney': 10000
+      'prizeMoney': 10000,
+      'fiftyFifty': [1, 2]
     }
   ];
 
@@ -41,6 +44,11 @@
       switchScene('question');
       main()
     })
+
+    const btnFiftyFifty = document.getElementById('js-btn-fifty-fifty');
+    btnFiftyFifty.addEventListener('click', () => {
+      fiftyFifty();
+    });
 
     const btnDropOut = document.getElementById('js-btn-drop-out');
     btnDropOut.addEventListener('click', () => {
@@ -113,9 +121,9 @@
   const nextQuestion = () => {
     // 問題番号インクリメント
     questionCount++;
-
     // 残り問題数によって分岐
     if (questionsData[questionCount] === undefined) {
+      questionCount--;
       // リザルト画面表示
       showResult();
     } else {
@@ -145,63 +153,101 @@
 
     choices.forEach((choice) => {
       choice.addEventListener('click', () => {
-        // 押下した選択肢を格納(リザルト画面でスコア表示に使用)
-        // selectAnswerArr.push(choice.dataset.id);
-        switchScene('judge');
-        if (Number(choice.dataset.id) === questionsData[questionCount]['answer']) {
-          document.getElementById('js-result-judge-correct').classList.remove('d-none')
-          setTimeout(() => {
-            nextQuestion()
-          }, 500);
-        } else {
-          document.getElementById('js-result-judge-incorrect').classList.remove('d-none')
-        }
+        finalAnswer(choice);
       });
     });
   }
 
-  const judgeQuestion = () => {
-    
+  const finalAnswer = choice => {
+    const finalAnswerWrap = document.getElementById('js-final-answer-wrap')
+    finalAnswerWrap.classList.remove('d-none');
+
+    const btnCancelFinalAnswer = document.getElementById('js-btn-cancel-final-answer');
+    const btnApplyFinalAnswer = document.getElementById('js-btn-apply-final-answer');
+
+    btnCancelFinalAnswer.addEventListener('click', () => {
+      // closeFinalAnswerWrap()
+      finalAnswerWrap.classList.add('d-none');
+    }, {once: true});
+
+    btnApplyFinalAnswer.addEventListener('click', () => {
+      // イベント多重発火を防ぐ
+      if (!finalAnswerWrap.classList.contains('d-none')) {
+        finalAnswerWrap.classList.add('d-none');
+        judgeQuestion(choice);
+      }
+    }, {once: true});
+  }
+
+  const judgeQuestion = choice => {
+    // 押下した選択肢を格納(リザルト画面でスコア表示に使用)
+    // selectAnswerArr.push(choice.dataset.id);
+    switchScene('judge');
+    const resultJudgeCorrect = document.getElementById('js-result-judge-correct');
+    const resultJudgeIncorrect = document.getElementById('js-result-judge-incorrect');
+
+    resultJudgeCorrect.classList.add('d-none');
+    resultJudgeIncorrect.classList.add('d-none');
+
+    // 選択肢が正解の場合は
+    if (Number(choice.dataset.id) === questionsData[questionCount]['answer']) {
+      resultJudgeCorrect.classList.remove('d-none')
+      setTimeout(() => {
+        nextQuestion()
+      }, 500);
+    } else {
+      // 最初に戻るボタンを表示
+      resultJudgeIncorrect.classList.remove('d-none')
+    }
+  }
+
+  const fiftyFifty = () => {
+console.log('50:50');
+    const fiftyFiftyWrap = document.getElementById('js-fifty-fifty-wrap')
+    fiftyFiftyWrap.classList.remove('d-none');
+
+    const btnCancelFiftyFifty = document.getElementById('js-btn-cancel-fifty-fifty');
+    const btnApplyFiftyFifty = document.getElementById('js-btn-apply-fifty-fifty');
+
+    btnCancelFiftyFifty.addEventListener('click', () => {
+      fiftyFiftyWrap.classList.add('d-none');
+    }, {once: true});
+
+    btnApplyFiftyFifty.addEventListener('click', () => {
+      // イベント多重発火を防ぐ
+      if (!fiftyFiftyWrap.classList.contains('d-none')) {
+        fiftyFiftyWrap.classList.add('d-none');
+        const choices = document.querySelectorAll('.choice');
+        const stayChoices = questionsData[questionCount]['fiftyFifty']
+        choices.forEach((val, i) => {
+          if (!stayChoices.includes(i)) {
+            val.classList.add('v-hidden')
+          }
+        })
+      }
+    }, {once: true});
   }
 
   const dropOut = () => {
     switchScene('dropout');
+    const btnApplyDropOut = document.getElementById('js-btn-apply-drop-out');
+    const btnCancelDropOut = document.getElementById('js-btn-cancel-drop-out');
 
+    btnApplyDropOut.addEventListener('click', () => {
+      init();
+    });
+
+    btnCancelDropOut.addEventListener('click', () => {
+      switchScene('question');
+    });
   }
 
   // リザルト画面
   const showResult = () => {
-    // // 合計問題数を表示
-    // document.getElementById('js-result-total-question').innerText = questionCount;
-
-    // // 正解数を計算し表示
-    // let resultTotalScore = 0;
-    // correctAnswerArr.forEach((val, i) => {
-    //   if (val == selectAnswerArr[i]) {
-    //     resultTotalScore++;
-    //   }
-    // });
-
-    // document.getElementById('js-result-total-score').innerText = resultTotalScore;
-
-    // // 正解数に応じたコメントを表示
-    // const resultJudge = resultTotalScore / correctAnswerArr.length;
-    // let resultComment = '';
-    // if (resultJudge === 1) {
-    //   resultComment = '全問正解！　素晴らしい٩(๑òωó๑)۶';
-    // } else if (resultJudge > 0.8) {
-    //   resultComment = 'あと少しで全問正解！';
-    // } else if (resultJudge > 0.5) {
-    //   resultComment = '頑張りましょう';
-    // } else if (resultJudge > 0.3) {
-    //   resultComment = '精進が足りません';
-    // } else {
-    //   resultComment = 'マジ？';
-    // }
-    // document.getElementById('js-result-comment').innerText = resultComment;
-
     // リザルト画面表示
     switchScene('result');
+
+    document.getElementById('js-total-prize-money').innerText = questionsData[questionCount]['prizeMoney'];
   }
 
   init();

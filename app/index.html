@@ -26,14 +26,7 @@
       <div class="contents-main">
         <ul id="js-answer-area" class="answer-area"></ul>
         <button id="js-btn-drop-out" class="btn btn--secondary">ドロップアウト</button>
-      </div>
-    </div>
-
-    <div id="js-result-wrap" class="contents-inner d-none">
-      <p class="sub-text">あなたの選んだ選択肢は<br>
-      <span id="js-result-total-question"></span>問中、<span id="js-result-total-score"></span>問正解でした。</p>
-      <div class="contents-main">
-        <p id="js-result-comment" class="result-comment"></p>
+        <button id="js-btn-fifty-fifty" class="btn btn--secondary">50:50</button>
       </div>
     </div>
 
@@ -53,14 +46,32 @@
       <h1>ドロップアウト？</h1>
       <p class="sub-text">ドロップアウトするとこれまでの賞金を手に入れて終了となります。<br>
       本当にドロップアウトしますか？</p>
-      <ul class="answer-area">
-        <li id="js-apply-drop-out">はい</li>
-        <li id="js-cancel-drop-out">いいえ</li>
-      </ul>
+      <button id="js-btn-cancel-drop-out" class="btn btn--secondary">いいえ</button>
+      <button id="js-btn-apply-drop-out" class="btn btn--primary">はい</button>
     </div>
 
+    <div id="js-result-wrap" class="contents-inner d-none">
+      <p class="sub-text">全問正解おめでとう！<br>
+      賞金<span id="js-total-prize-money"></span>円はあなたのものです！</p>
+    </div>
   </div>
-  <script src="https://code.jquery.com/jquery-3.4.1.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
+
+  <div id="js-final-answer-wrap" class="modal d-none">
+    <div class="modal-inner">
+      <h1>ファイナルアンサー？</h1>
+      <button id="js-btn-cancel-final-answer" class="btn btn--secondary">いいえ</button>
+      <button id="js-btn-apply-final-answer" class="btn btn--primary">ファイナルアンサー！</button>
+    </div>
+  </div>
+
+  <div id="js-fifty-fifty-wrap" class="modal d-none">
+    <div class="modal-inner">
+      <h1>50:50 を使用しますか？</h1>
+      <button id="js-btn-cancel-fifty-fifty" class="btn btn--secondary">いいえ</button>
+      <button id="js-btn-apply-fifty-fifty" class="btn btn--primary">使用する</button>
+    </div>
+  </div>
+
   <script src="main.js"></script>
 </body>
 </html>
