@@ -15,23 +15,50 @@
       <h1>四択クイズ</h1>
       <p class="sub-text">何問解けるかな？</p>
       <div class="contents-main">
-        <button id="js-btn-start" class="btn-start">開始する</button>
+        <button id="js-btn-start" class="btn btn--primary">開始する</button>
       </div>
     </div>
-    <div id="js-question-wrap" class="contents-inner">
+
+    <div id="js-question-wrap" class="contents-inner d-none">
       <h1>第<span id="js-question-num"></span>問</h1>
       <p id="js-question-text" class="sub-text"></p>
+      <p class="sub-text"><span id="js-prize-money"></span>円</p>
       <div class="contents-main">
         <ul id="js-answer-area" class="answer-area"></ul>
+        <button id="js-btn-drop-out" class="btn btn--secondary">ドロップアウト</button>
       </div>
     </div>
-    <div id="js-result-wrap" class="contents-inner">
+
+    <div id="js-result-wrap" class="contents-inner d-none">
       <p class="sub-text">あなたの選んだ選択肢は<br>
       <span id="js-result-total-question"></span>問中、<span id="js-result-total-score"></span>問正解でした。</p>
       <div class="contents-main">
         <p id="js-result-comment" class="result-comment"></p>
       </div>
     </div>
+
+    <div id="js-result-judge-wrap" class="contents-inner d-none">
+      <h1>あなたの選択肢は…</h1>
+      <div id="js-result-judge-correct" class="d-none">
+        <p>正解！</p>
+      </div>
+      <div id="js-result-judge-incorrect" class="d-none">
+        <p>不正解…</p>
+        <p>次回のチャレンジをお待ちしています。</p>
+        <button class="js-btn-back-to-top btn btn--secondary">クイズ開始画面に戻る</button>
+      </div>
+    </div>
+
+    <div id="js-drop-out-wrap" class="contents-inner d-none">
+      <h1>ドロップアウト？</h1>
+      <p class="sub-text">ドロップアウトするとこれまでの賞金を手に入れて終了となります。<br>
+      本当にドロップアウトしますか？</p>
+      <ul class="answer-area">
+        <li id="js-apply-drop-out">はい</li>
+        <li id="js-cancel-drop-out">いいえ</li>
+      </ul>
+    </div>
+
   </div>
   <script src="https://code.jquery.com/jquery-3.4.1.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
   <script src="main.js"></script>

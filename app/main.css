@@ -25,30 +25,39 @@ h1 {
 .contents-inner {
   display: flex;
   flex-direction: column;
-  height: 400px;
+  min-height: 380px;
 }
 .contents-main {
   display: flex;
+  flex-direction: column;
   justify-content: center;
   align-items: center;
   flex-grow: 1;
+  padding: 20px 0;
   border-radius: 10px;
   background-color: #f0f9ff;
 }
-.btn-start {
+.btn {
   padding: 10px 15px;
   border-radius: 4px;
+}
+.btn:hover {
+  opacity: .8;
+}
+.btn--primary {
   background-color: #c62828;
   color: #fff;
 }
-.btn-start:hover {
-  opacity: .8;
+.btn--secondary {
+  background-color: #2845c6;
+  color: #fff;
 }
 .sub-text {
   margin-bottom: 10px;
   font-size: 24px;
 }
 .answer-area {
+  margin-bottom: 20px;
   padding: 0;
 }
 .choice {
@@ -71,4 +80,7 @@ h1 {
 }
 .result-comment {
   font-size: 24px;
+}
+.d-none {
+  display: none;
 }
