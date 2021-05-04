@@ -1,5 +1,5 @@
 (function () {
-  'use strict';
+  'use strict'
 
   // 問題
   const questionsData = [
@@ -27,171 +27,171 @@
       'prizeMoney': 10000,
       'fiftyFifty': [1, 2]
     }
-  ];
+  ]
 
-  let questionCount    = 0;  // 問題番号(0を1番目とする)
+  let questionCount    = 0  // 問題番号(0を1番目とする)
 
   // 画面初期化
   const init = () => {
-    questionCount = 0;
-    switchScene('opening');
+    questionCount = 0
+    switchScene('opening')
 
     // クイズ開始
     document.getElementById('js-btn-start').addEventListener('click', () => {
-      switchScene('question');
+      switchScene('question')
       main()
     })
 
     // 50:50
     document.getElementById('js-btn-fifty-fifty').addEventListener('click', () => {
-      fiftyFifty();
-    });
+      fiftyFifty()
+    })
 
     // ドロップアウト
     document.getElementById('js-btn-drop-out').addEventListener('click', () => {
-      dropOut();
-    });
+      dropOut()
+    })
 
     // クイズリセット
     document.querySelectorAll('.js-btn-reset').forEach(val => {
       val.addEventListener('click', () => {
-        init();
-      });
-    });
+        init()
+      })
+    })
   }
 
   // 問題表示し正解番号を返却、次の問題へ
   const main = () => {
-    switchScene('question');
-    showQuestion();
-    choiceAnswer();
+    switchScene('question')
+    showQuestion()
+    choiceAnswer()
   }
 
   // 画面切り替え
   const switchScene = scene => {
-    const openingWrap  = document.getElementById('js-opening-wrap');  // オープニング
-    const questionWrap = document.getElementById('js-question-wrap'); // 問題
-    const resultJudgeWrap = document.getElementById('js-result-judge-wrap');  // 判定
-    const dropOutWrap = document.getElementById('js-drop-out-wrap');  // ドロップアウト
-    const resultWrap   = document.getElementById('js-result-wrap');   // リザルト
+    const openingWrap  = document.getElementById('js-opening-wrap')  // オープニング
+    const questionWrap = document.getElementById('js-question-wrap') // 問題
+    const resultJudgeWrap = document.getElementById('js-result-judge-wrap')  // 判定
+    const dropOutWrap = document.getElementById('js-drop-out-wrap')  // ドロップアウト
+    const resultWrap   = document.getElementById('js-result-wrap')   // リザルト
 
     switch (scene) {
-      case 'opening':
-        openingWrap.classList.remove('d-none');
-        questionWrap.classList.add('d-none');
-        resultJudgeWrap.classList.add('d-none');
-        dropOutWrap.classList.add('d-none');
-        resultWrap.classList.add('d-none');
-        break;
-      case 'question':
-        openingWrap.classList.add('d-none');
-        questionWrap.classList.remove('d-none');
-        resultJudgeWrap.classList.add('d-none');
-        dropOutWrap.classList.add('d-none');
-        resultWrap.classList.add('d-none');
-        break;
-      case 'judge':
-        openingWrap.classList.add('d-none');
-        questionWrap.classList.add('d-none');
-        resultJudgeWrap.classList.remove('d-none');
-        dropOutWrap.classList.add('d-none');
-        resultWrap.classList.add('d-none');
-        break;
-      case 'dropout':
-        openingWrap.classList.add('d-none');
-        questionWrap.classList.add('d-none');
-        resultJudgeWrap.classList.add('d-none');
-        dropOutWrap.classList.remove('d-none');
-        resultWrap.classList.add('d-none');
-        break;
-      case 'result':
-        openingWrap.classList.add('d-none');
-        questionWrap.classList.add('d-none');
-        resultJudgeWrap.classList.add('d-none');
-        dropOutWrap.classList.add('d-none');
-        resultWrap.classList.remove('d-none');
-        break;
+    case 'opening':
+      openingWrap.classList.remove('d-none')
+      questionWrap.classList.add('d-none')
+      resultJudgeWrap.classList.add('d-none')
+      dropOutWrap.classList.add('d-none')
+      resultWrap.classList.add('d-none')
+      break
+    case 'question':
+      openingWrap.classList.add('d-none')
+      questionWrap.classList.remove('d-none')
+      resultJudgeWrap.classList.add('d-none')
+      dropOutWrap.classList.add('d-none')
+      resultWrap.classList.add('d-none')
+      break
+    case 'judge':
+      openingWrap.classList.add('d-none')
+      questionWrap.classList.add('d-none')
+      resultJudgeWrap.classList.remove('d-none')
+      dropOutWrap.classList.add('d-none')
+      resultWrap.classList.add('d-none')
+      break
+    case 'dropout':
+      openingWrap.classList.add('d-none')
+      questionWrap.classList.add('d-none')
+      resultJudgeWrap.classList.add('d-none')
+      dropOutWrap.classList.remove('d-none')
+      resultWrap.classList.add('d-none')
+      break
+    case 'result':
+      openingWrap.classList.add('d-none')
+      questionWrap.classList.add('d-none')
+      resultJudgeWrap.classList.add('d-none')
+      dropOutWrap.classList.add('d-none')
+      resultWrap.classList.remove('d-none')
+      break
     }
   }
 
   // 次の問題へ進む
   const nextQuestion = () => {
     // 問題番号インクリメント
-    questionCount++;
+    questionCount++
     // 残り問題数によって分岐
     if (questionsData[questionCount] === undefined) {
-      questionCount--;
+      questionCount--
       // リザルト画面表示
-      showResult();
+      showResult()
     } else {
       // 次の問題を表示
-      main();
+      main()
     }
   }
 
   // 問題表示
   const showQuestion = () => {
-    document.getElementById('js-question-num').innerText = questionsData[questionCount]['id']; // 問題番号(第x問)
-    document.getElementById('js-question-text').innerText = questionsData[questionCount]['text']; // 問題文
-    document.getElementById('js-prize-money').innerText = questionsData[questionCount]['prizeMoney']; // 賞金
+    document.getElementById('js-question-num').innerText = questionsData[questionCount]['id'] // 問題番号(第x問)
+    document.getElementById('js-question-text').innerText = questionsData[questionCount]['text'] // 問題文
+    document.getElementById('js-prize-money').innerText = questionsData[questionCount]['prizeMoney'] // 賞金
 
     // 四択回答初期化&生成表示
-    const answerArr = [];
+    const answerArr = []
     questionsData[questionCount]['choices'].forEach((val, i) => {
-      answerArr.push(`<li class="choice" data-id=${i}>${questionsData[questionCount]['choices'][i]}</li>`);
-    });
+      answerArr.push(`<li class="choice" data-id=${i}>${questionsData[questionCount]['choices'][i]}</li>`)
+    })
 
-    document.getElementById('js-answer-area').innerHTML = answerArr.join('');
+    document.getElementById('js-answer-area').innerHTML = answerArr.join('')
   }
 
   // 回答選択
   const choiceAnswer = () => {
-    const choices = document.querySelectorAll('.choice');
+    const choices = document.querySelectorAll('.choice')
 
     choices.forEach((choice) => {
       choice.addEventListener('click', () => {
-        finalAnswer(choice);
-      });
-    });
+        finalAnswer(choice)
+      })
+    })
   }
 
   // ファイナルアンサー
   const finalAnswer = choice => {
     const finalAnswerWrap = document.getElementById('js-final-answer-wrap')
-    finalAnswerWrap.classList.remove('d-none');
+    finalAnswerWrap.classList.remove('d-none')
 
-    const btnCancelFinalAnswer = document.getElementById('js-btn-cancel-final-answer');
-    const btnApplyFinalAnswer = document.getElementById('js-btn-apply-final-answer');
+    const btnCancelFinalAnswer = document.getElementById('js-btn-cancel-final-answer')
+    const btnApplyFinalAnswer = document.getElementById('js-btn-apply-final-answer')
 
     btnCancelFinalAnswer.addEventListener('click', () => {
       // closeFinalAnswerWrap()
-      finalAnswerWrap.classList.add('d-none');
-    }, {once: true});
+      finalAnswerWrap.classList.add('d-none')
+    }, {once: true})
 
     btnApplyFinalAnswer.addEventListener('click', () => {
       // イベント多重発火を防ぐ
       if (!finalAnswerWrap.classList.contains('d-none')) {
-        finalAnswerWrap.classList.add('d-none');
-        judgeQuestion(choice);
+        finalAnswerWrap.classList.add('d-none')
+        judgeQuestion(choice)
       }
-    }, {once: true});
+    }, {once: true})
   }
 
   // 正答判定
   const judgeQuestion = choice => {
-    switchScene('judge');
-    const resultJudgeCorrect = document.getElementById('js-result-judge-correct');
-    const resultJudgeIncorrect = document.getElementById('js-result-judge-incorrect');
+    switchScene('judge')
+    const resultJudgeCorrect = document.getElementById('js-result-judge-correct')
+    const resultJudgeIncorrect = document.getElementById('js-result-judge-incorrect')
 
-    resultJudgeCorrect.classList.add('d-none');
-    resultJudgeIncorrect.classList.add('d-none');
+    resultJudgeCorrect.classList.add('d-none')
+    resultJudgeIncorrect.classList.add('d-none')
 
     // 選択肢が正解の場合は
     if (Number(choice.dataset.id) === questionsData[questionCount]['answer']) {
       resultJudgeCorrect.classList.remove('d-none')
       setTimeout(() => {
         nextQuestion()
-      }, 500);
+      }, 500)
     } else {
       // 最初に戻るボタンを表示
       resultJudgeIncorrect.classList.remove('d-none')
@@ -201,20 +201,20 @@
   // 50:50
   const fiftyFifty = () => {
     const fiftyFiftyWrap = document.getElementById('js-fifty-fifty-wrap')
-    fiftyFiftyWrap.classList.remove('d-none');
+    fiftyFiftyWrap.classList.remove('d-none')
 
-    const btnCancelFiftyFifty = document.getElementById('js-btn-cancel-fifty-fifty');
-    const btnApplyFiftyFifty = document.getElementById('js-btn-apply-fifty-fifty');
+    const btnCancelFiftyFifty = document.getElementById('js-btn-cancel-fifty-fifty')
+    const btnApplyFiftyFifty = document.getElementById('js-btn-apply-fifty-fifty')
 
     btnCancelFiftyFifty.addEventListener('click', () => {
-      fiftyFiftyWrap.classList.add('d-none');
-    }, {once: true});
+      fiftyFiftyWrap.classList.add('d-none')
+    }, {once: true})
 
     btnApplyFiftyFifty.addEventListener('click', () => {
       // イベント多重発火を防ぐ
       if (!fiftyFiftyWrap.classList.contains('d-none')) {
-        fiftyFiftyWrap.classList.add('d-none');
-        const choices = document.querySelectorAll('.choice');
+        fiftyFiftyWrap.classList.add('d-none')
+        const choices = document.querySelectorAll('.choice')
         const stayChoices = questionsData[questionCount]['fiftyFifty']
         choices.forEach((val, i) => {
           if (!stayChoices.includes(i)) {
@@ -222,31 +222,31 @@
           }
         })
       }
-    }, {once: true});
+    }, {once: true})
   }
 
   // ドロップアウト
   const dropOut = () => {
-    switchScene('dropout');
-    const btnApplyDropOut = document.getElementById('js-btn-apply-drop-out');
-    const btnCancelDropOut = document.getElementById('js-btn-cancel-drop-out');
+    switchScene('dropout')
+    const btnApplyDropOut = document.getElementById('js-btn-apply-drop-out')
+    const btnCancelDropOut = document.getElementById('js-btn-cancel-drop-out')
 
     btnApplyDropOut.addEventListener('click', () => {
-      init();
-    });
+      init()
+    })
 
     btnCancelDropOut.addEventListener('click', () => {
-      switchScene('question');
-    });
+      switchScene('question')
+    })
   }
 
   // リザルト
   const showResult = () => {
-    switchScene('result');
+    switchScene('result')
 
     // 賞金表示
-    document.getElementById('js-total-prize-money').innerText = questionsData[questionCount]['prizeMoney'];
+    document.getElementById('js-total-prize-money').innerText = questionsData[questionCount]['prizeMoney']
   }
 
-  init();
-})();
+  init()
+})()
