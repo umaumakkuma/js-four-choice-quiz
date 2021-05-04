@@ -30,33 +30,30 @@
   ];
 
   let questionCount    = 0;  // 問題番号(0を1番目とする)
-  // let correctAnswerArr = []; // 正解選択肢
-  // let selectAnswerArr  = []  // ユーザーが選んだ選択肢
 
   // 画面初期化
   const init = () => {
     questionCount = 0;
     switchScene('opening');
 
-    // 開始するボタン押下で問題画面に切り替え、問題を表示させる
-    const btnStart = document.getElementById('js-btn-start');
-    btnStart.addEventListener('click', () => {
+    // クイズ開始
+    document.getElementById('js-btn-start').addEventListener('click', () => {
       switchScene('question');
       main()
     })
 
-    const btnFiftyFifty = document.getElementById('js-btn-fifty-fifty');
-    btnFiftyFifty.addEventListener('click', () => {
+    // 50:50
+    document.getElementById('js-btn-fifty-fifty').addEventListener('click', () => {
       fiftyFifty();
     });
 
-    const btnDropOut = document.getElementById('js-btn-drop-out');
-    btnDropOut.addEventListener('click', () => {
+    // ドロップアウト
+    document.getElementById('js-btn-drop-out').addEventListener('click', () => {
       dropOut();
     });
 
-    const btnBackToTop = document.querySelectorAll('.js-btn-back-to-top')
-    btnBackToTop.forEach(val => {
+    // クイズリセット
+    document.querySelectorAll('.js-btn-reset').forEach(val => {
       val.addEventListener('click', () => {
         init();
       });
@@ -67,7 +64,6 @@
   const main = () => {
     switchScene('question');
     showQuestion();
-    // correctAnswerArr.push(questionsData[questionCount]['answer']);
     choiceAnswer();
   }
 
@@ -118,6 +114,7 @@
     }
   }
 
+  // 次の問題へ進む
   const nextQuestion = () => {
     // 問題番号インクリメント
     questionCount++;
@@ -134,7 +131,7 @@
 
   // 問題表示
   const showQuestion = () => {
-    document.getElementById('js-question-num').innerText = questionsData[questionCount]['id'];    // 問題番号(第x問)
+    document.getElementById('js-question-num').innerText = questionsData[questionCount]['id']; // 問題番号(第x問)
     document.getElementById('js-question-text').innerText = questionsData[questionCount]['text']; // 問題文
     document.getElementById('js-prize-money').innerText = questionsData[questionCount]['prizeMoney']; // 賞金
 
@@ -158,6 +155,7 @@
     });
   }
 
+  // ファイナルアンサー
   const finalAnswer = choice => {
     const finalAnswerWrap = document.getElementById('js-final-answer-wrap')
     finalAnswerWrap.classList.remove('d-none');
@@ -179,9 +177,8 @@
     }, {once: true});
   }
 
+  // 正答判定
   const judgeQuestion = choice => {
-    // 押下した選択肢を格納(リザルト画面でスコア表示に使用)
-    // selectAnswerArr.push(choice.dataset.id);
     switchScene('judge');
     const resultJudgeCorrect = document.getElementById('js-result-judge-correct');
     const resultJudgeIncorrect = document.getElementById('js-result-judge-incorrect');
@@ -201,8 +198,8 @@
     }
   }
 
+  // 50:50
   const fiftyFifty = () => {
-console.log('50:50');
     const fiftyFiftyWrap = document.getElementById('js-fifty-fifty-wrap')
     fiftyFiftyWrap.classList.remove('d-none');
 
@@ -228,6 +225,7 @@ console.log('50:50');
     }, {once: true});
   }
 
+  // ドロップアウト
   const dropOut = () => {
     switchScene('dropout');
     const btnApplyDropOut = document.getElementById('js-btn-apply-drop-out');
@@ -242,11 +240,11 @@ console.log('50:50');
     });
   }
 
-  // リザルト画面
+  // リザルト
   const showResult = () => {
-    // リザルト画面表示
     switchScene('result');
 
+    // 賞金表示
     document.getElementById('js-total-prize-money').innerText = questionsData[questionCount]['prizeMoney'];
   }
 
